@@ -1,0 +1,12 @@
+image: docker:stable
+services:
+  - docker:dind
+before_script:
+  - docker info
+  - docker login -u $CI_USER -p $CI_PASSWORD
+build-docker:
+  stage: build
+  script:
+    - docker build -t meu-app .
+    - docker tag meu-app liviorodrigues/node:latest
+    - docker push liviorodrigues/node:latest
